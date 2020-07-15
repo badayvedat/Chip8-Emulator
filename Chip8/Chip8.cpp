@@ -1,8 +1,8 @@
-#include "Chip8.h"
-
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+
+#include "Chip8.h"
 
 void Chip8::initialize() {
 	pc = 0x200;		// Program counter starts at 0x200
