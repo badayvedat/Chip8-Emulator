@@ -65,12 +65,26 @@ void Chip8::emulateCycle() {
 	opcode = memory[pc] << 8 | memory[pc + 1];
 	
 	// Decode opcode
+	//AND opcode with 0xF000 to get first 4 bits.
 	switch (opcode & 0xF000) {
-	case 0xA000:
-		I = opcode & 0x0FFF;
-		pc += 2;
-		break;
-	default:
-		std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
+		case 0x0000:
+			// AND opcode with 0x0FF to get last 8 bits
+			switch (opcode & 0x0FF) {
+				// Calls machine code routine (RCA 1802 for COSMAC VIP) at address NNN. Not necessary for most ROMs.
+				case 0x0000:
+					break;
+
+				// Clears the screen
+				case 0x00E0:
+					for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
+						gfx[i] = 0;
+					}
+					drawFlag = true;
+					pc += 2;
+					break;
+			}
+		
+		default:
+			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 	}
 }
