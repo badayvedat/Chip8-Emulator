@@ -82,9 +82,18 @@ void Chip8::emulateCycle() {
 					drawFlag = true;
 					pc += 2;
 					break;
+
+				// Returns from a subroutine
+				case 0x00EE:
+					--sp;
+					pc = stack[sp];
+				default:
+					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
+					break;
 			}
 		
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
+			break;
 	}
 }
