@@ -97,6 +97,11 @@ void Chip8::emulateCycle() {
 		case 0x1000:
 			pc = (opcode & 0x0FFF);
 
+		// Calls subroutine at NNN
+		case 0x2000:
+			stack[sp] = pc;
+			sp++;
+			pc = (opcode & 0x0FFF);
 
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
