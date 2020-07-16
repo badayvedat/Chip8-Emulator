@@ -139,6 +139,12 @@ void Chip8::emulateCycle() {
 			pc += 2;
 			break;
 
+		// Adds NN to VX (Carry flag is not changed)
+		case 0x7000:
+			V[(opcode & 0x0F00) >> 8] += (opcode & 0x00FF);
+			pc += 2;
+			break;
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
