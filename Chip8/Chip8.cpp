@@ -145,6 +145,86 @@ void Chip8::emulateCycle() {
 			pc += 2;
 			break;
 
+		case 0x8000:
+			unsigned char VX = V[(opcode & 0x0F00) >> 8];
+			unsigned char VY = V[(opcode & 0x00F0) >> 4];
+			switch (opcode & 0x000F) {
+				// Sets VX to the value of VY
+				case 0x0000:
+					V[(opcode & 0x0F00) >> 8] = VY;
+					pc += 2;
+					break;
+
+				// Sets VX to VX or VY (Bitwise OR operation)
+				case 0x0001:
+					V[(opcode & 0x0F00) >> 8] = (VX | VY);
+					pc += 2;
+					break;
+
+				// Sets VX to VX and VY (Bitwise AND operation)
+				case 0x0002:
+					V[(opcode & 0x0F00) >> 8] = (VX & VY);
+					pc += 2;
+					break;
+
+				// Sets VX to VX xor VY
+				case 0x0003:
+					V[(opcode & 0x0F00) >> 8] = (VX ^ VY);
+					pc += 2;
+					break;
+
+				// Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't.
+				case 0x0004:
+					if (VX > 0xFF - VY) {
+						V[0xF] = 1;
+					} else {
+						V[0xF] = 0;
+					}
+					V[(opcode & 0x0F00) >> 8] += VY;
+					pc += 2;
+					break;
+
+				// VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
+				case 0x0005:
+					if (VX < VY) {
+						V[0xF] = 0;
+					} else {
+						V[0xF] = 1;
+					}
+					V[(opcode & 0x0F00) >> 8] -= VY;
+					pc += 2;
+					break;
+
+				// Stores the least significant bit of VX in VF and then shifts VX to the right by 1.
+				case 0x0006:
+					V[0xF] = (VX & 0x1);
+					V[(opcode & 0x0F00) >> 8] >>= 1;
+					pc += 2;
+					break;
+
+				// Sets VX to VY minux VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
+				case 0x0007:
+					if (VX > VY) {
+						V[0xF] = 0;
+					} else {
+						V[0xF] = 1;
+					}
+					V[(opcode & 0x0F00) >> 8] = VY - VX;
+					pc += 2;
+					break;
+
+				// Stores the most significant bit of VX in VF and then shifts VX to the left by 1.
+				case 0x000E:
+					V[0xF] = (VX & 0x1);
+					V[(opcode & 0x0F00) >> 8] <<= 1;
+					pc += 2;
+					break;
+
+				default:
+					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
+					break;
+			}
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
