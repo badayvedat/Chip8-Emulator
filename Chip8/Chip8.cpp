@@ -234,6 +234,14 @@ void Chip8::emulateCycle() {
 			}
 			break;
 
+		// TODO implement ANNN, BNNN
+
+		// Sets VX to the result of a bitwise and operation on a random number.
+		case 0xC000:
+			V[(opcode & 0x0F00) >> 8] = (rand() % 0xFF) & (opcode & 0x00FF);
+			pc += 2;
+			break;
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
