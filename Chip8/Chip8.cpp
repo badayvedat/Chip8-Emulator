@@ -87,6 +87,7 @@ void Chip8::emulateCycle() {
 				case 0x00EE:
 					--sp;
 					pc = stack[sp];
+					break;
 
 				default:
 					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
@@ -96,12 +97,14 @@ void Chip8::emulateCycle() {
 		// Jumps to address NNN
 		case 0x1000:
 			pc = (opcode & 0x0FFF);
+			break;
 
 		// Calls subroutine at NNN
 		case 0x2000:
 			stack[sp] = pc;
 			sp++;
 			pc = (opcode & 0x0FFF);
+			break;
 
 		// Skips the next instruction if VX equals NN
 		case 0x3000:
@@ -110,6 +113,8 @@ void Chip8::emulateCycle() {
 			} else {
 				pc += 2;
 			}
+			break;
+
 		// Skips the next instruction if VX doesn't equal NN
 		case 0x4000:
 			if (V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF)) {
@@ -117,6 +122,7 @@ void Chip8::emulateCycle() {
 			} else {
 				pc += 2;
 			}
+			break;
 
 		// Skips the next instruction if VX equals VY
 		case 0x5000:
@@ -125,11 +131,13 @@ void Chip8::emulateCycle() {
 			} else {
 				pc += 2;
 			}
+			break;
 
 		// Sets VX to NN
 		case 0x6000:
 			V[(opcode & 0x0F00) >> 8] = (opcode & 0x00FF);
 			pc += 2;
+			break;
 
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
