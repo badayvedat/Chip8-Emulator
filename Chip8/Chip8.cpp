@@ -87,11 +87,18 @@ void Chip8::emulateCycle() {
 				case 0x00EE:
 					--sp;
 					pc = stack[sp];
+
 				default:
 					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 					break;
 			}
 		
+		// Jumps to aaddress NNN
+		case 0x1000:
+			stack[sp] = pc;
+			sp++;
+			pc = (opcode & 0x0FFF);
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
