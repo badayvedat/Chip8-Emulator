@@ -112,7 +112,7 @@ void Chip8::emulateCycle() {
 			}
 		// Skips the next instruction if VX doesn't equal NN
 		case 0x4000:
-			if (V[opcode & 0x0F00 >> 8] != (opcode & 0x00FF)) {
+			if (V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF)) {
 				pc += 4;
 			} else {
 				pc += 2;
