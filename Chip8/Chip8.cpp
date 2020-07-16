@@ -103,6 +103,14 @@ void Chip8::emulateCycle() {
 			sp++;
 			pc = (opcode & 0x0FFF);
 
+		// Skips the next instruction if VX equals NN
+		case 0x3000:
+			if (V[(opcode & 0x0F00) >> 8] == (opcode & 0x00FF)) {
+				pc += 4;
+			} else {
+				pc += 2;
+			}
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
