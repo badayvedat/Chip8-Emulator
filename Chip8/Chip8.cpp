@@ -118,6 +118,14 @@ void Chip8::emulateCycle() {
 				pc += 2;
 			}
 
+		// Skips the next instruction if VX equals VY
+		case 0x5000:
+			if (V[(opcode & 0x0F00) >> 8] == V[(opcode & 0x00F0) >> 4]) {
+				pc += 4;
+			} else {
+				pc += 2;
+			}
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
