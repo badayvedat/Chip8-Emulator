@@ -348,6 +348,24 @@ void Chip8::emulateCycle() {
 					delay_timer = V[(opcode & 0x0F00) >> 8];
 					pc += 2;
 					break;
+
+				// Sets the sound timer to VX.
+				case 0x0018:
+					sound_timer = V[(opcode & 0x0F00) >> 8];
+					pc += 2;
+					break;
+
+				/* 	
+				Adds VX to I. VF is not affected.
+				Most CHIP-8 interpreters' FX1E instructions do not affect VF, with one exception: 
+				The CHIP-8 interpreter for the Commodore Amiga sets VF to 1 when there is a range overflow (I+VX>0xFFF), 
+				and to 0 when there isn't. The only known game that depends on this behavior is Spacefight 2091! 
+				While at least one game, Animal Race, depends on VF not being affected.
+				*/
+				case 0x001E:
+					I += (opcode & 0x0F00) >> 8;
+					pc += 2;
+					break;
 			}
 
 		default:
