@@ -234,7 +234,13 @@ void Chip8::emulateCycle() {
 			}
 			break;
 
-		// TODO implement ANNN, BNNN
+
+		case 0xA000:
+			I = (opcode & 0x0FFF);
+			pc += 2;
+			break;
+
+		// TODO implement, BNNN
 
 		// Sets VX to the result of a bitwise and operation on a random number.
 		case 0xC000:
