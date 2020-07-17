@@ -240,7 +240,10 @@ void Chip8::emulateCycle() {
 			pc += 2;
 			break;
 
-		// TODO implement, BNNN
+		// Jump to the address NNN plus V0.
+		case 0xB000:
+			pc = ((opcode & 0x0FFF) + V[0x000]);
+			break;
 
 		// Sets VX to the result of a bitwise and operation on a random number.
 		case 0xC000:
