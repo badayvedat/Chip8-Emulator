@@ -325,6 +325,23 @@ void Chip8::emulateCycle() {
 					delay_timer = V[(opcode & 0x0F00) >> 8];
 					pc += 2;
 					break;
+
+				// A key press is awaited, and then stored in VX. (Blocking Operation. All instruction halted until next key event).
+				case 0x000A:
+					bool key_pressed = false;
+					
+					while (!key_pressed) {
+						for (int i = 0; i < 16; i++) {
+							if (key[i] != 0) {
+								key_pressed = true;
+								V[(opcode & 0x0F00) >> 8] = i;
+								break;
+							}
+						}
+					}
+
+					pc += 2;
+					break;
 			}
 
 		default:
