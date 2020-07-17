@@ -155,11 +155,9 @@ void Chip8::emulateCycle() {
 
 		case 0x8000: {
 			switch (opcode & 0x000F) {
-				unsigned char VX, VY;
-				VX = V[(opcode & 0x0F00) >> 8];
-				VY = V[(opcode & 0x00F0) >> 4];
 				// Sets VX to the value of VY
 				case 0x0000: {
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = VY;
 					pc += 2;
 					break;
@@ -167,6 +165,8 @@ void Chip8::emulateCycle() {
 
 				// Sets VX to VX or VY (Bitwise OR operation)
 				case 0x0001: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = (VX | VY);
 					pc += 2;
 					break;
@@ -174,6 +174,8 @@ void Chip8::emulateCycle() {
 
 				// Sets VX to VX and VY (Bitwise AND operation)
 				case 0x0002: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = (VX & VY);
 					pc += 2;
 					break;
@@ -181,6 +183,8 @@ void Chip8::emulateCycle() {
 
 				// Sets VX to VX xor VY
 				case 0x0003: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = (VX ^ VY);
 					pc += 2;
 					break;
@@ -188,6 +192,8 @@ void Chip8::emulateCycle() {
 
 				// Adds VY to VX. VF is set to 1 when there's a carry, and to 0 when there isn't.
 				case 0x0004: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					if (VX > 0xFF - VY) {
 						V[0xF] = 1;
 					} else {
@@ -200,6 +206,8 @@ void Chip8::emulateCycle() {
 
 				// VY is subtracted from VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
 				case 0x0005: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					if (VX < VY) {
 						V[0xF] = 0;
 					} else {
@@ -212,6 +220,8 @@ void Chip8::emulateCycle() {
 
 				// Stores the least significant bit of VX in VF and then shifts VX to the right by 1.
 				case 0x0006: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[0xF] = (VX & 0x1);
 					V[(opcode & 0x0F00) >> 8] >>= 1;
 					pc += 2;
@@ -220,6 +230,8 @@ void Chip8::emulateCycle() {
 
 				// Sets VX to VY minux VX. VF is set to 0 when there's a borrow, and 1 when there isn't.
 				case 0x0007: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					if (VX > VY) {
 						V[0xF] = 0;
 					} else {
@@ -232,6 +244,8 @@ void Chip8::emulateCycle() {
 
 				// Stores the most significant bit of VX in VF and then shifts VX to the left by 1.
 				case 0x000E: {
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[0xF] = (VX & 0x1);
 					V[(opcode & 0x0F00) >> 8] <<= 1;
 					pc += 2;
@@ -279,13 +293,13 @@ void Chip8::emulateCycle() {
 		Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels.
 		Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn’t change after the execution of this instruction.
 		As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn’t happen.
+
 		Cowgod's Chip-8 DXYN Explanation:
 		The interpreter reads n bytes from memory, starting at the address stored in I.
 		These bytes are then displayed as sprites on screen at coordinates (Vx, Vy).
 		Sprites are XORed onto the existing screen.
 		If this causes any pixels to be erased, VF is set to 1, otherwise it is set to 0.
 		If the sprite is positioned so part of it is outside the coordinates of the display, it wraps around to the opposite side of the screen.
-		See instruction 8xy3 for more information on XOR, and section 2.4, Display, for more information on the Chip-8 screen and sprites.
 		*/
 		case 0xD000: {
 			unsigned char Y = V[(opcode & 0x0F00) >> 8];
