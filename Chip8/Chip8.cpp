@@ -318,6 +318,15 @@ void Chip8::emulateCycle() {
 					break;
 			}
 
+		case 0xF000:
+			switch (opcode & 0x00FF) {
+				// Sets VX to the value of the delay timer.
+				case 0x0007:
+					delay_timer = V[(opcode & 0x0F00) >> 8];
+					pc += 2;
+					break;
+			}
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
