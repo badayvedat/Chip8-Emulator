@@ -373,6 +373,22 @@ void Chip8::emulateCycle() {
 					I = VX * 5;
 					pc += 2;
 					break;
+
+				/*
+				Stores the binary-coded decimal representation of VX, 
+				with the most significant of three digits at the address in I, 
+				the middle digit at I plus 1, and the least significant digit at I plus 2. 
+				(In other words, take the decimal representation of VX, place the hundreds digit in memory at location in I, 
+				the tens digit at location I+1, and the ones digit at location I+2.)
+				*/
+				case 0x0033:
+					unsigned char VX = V[(opcode & 0x0F00) >> 8];
+					memory[I] = (VX / 100) % 10;
+					memory[I + 1] = (VX / 10) % 10;
+					memory[I + 2] = VX % 10;
+					pc += 2;
+					break;
+
 			}
 
 		default:
