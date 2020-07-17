@@ -234,7 +234,7 @@ void Chip8::emulateCycle() {
 			}
 			break;
 
-
+		// Sets I to the address NNNN.
 		case 0xA000:
 			I = (opcode & 0x0FFF);
 			pc += 2;
