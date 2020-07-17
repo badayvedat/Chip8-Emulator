@@ -251,6 +251,48 @@ void Chip8::emulateCycle() {
 			pc += 2;
 			break;
 
+		/*
+		Wikipedia's Chip-8 DXYN Explanation:
+		Draws a sprite at coordinate (VX, VY) that has a width of 8 pixels and a height of N pixels. 
+		Each row of 8 pixels is read as bit-coded starting from memory location I; I value doesn’t change after the execution of this instruction. 
+		As described above, VF is set to 1 if any screen pixels are flipped from set to unset when the sprite is drawn, and to 0 if that doesn’t happen. 
+
+		Cowgod's Chip-8 DXYN Explanation:
+		The interpreter reads n bytes from memory, starting at the address stored in I. 
+		These bytes are then displayed as sprites on screen at coordinates (Vx, Vy). 
+		Sprites are XORed onto the existing screen. 
+		If this causes any pixels to be erased, VF is set to 1, otherwise it is set to 0. 
+		If the sprite is positioned so part of it is outside the coordinates of the display, it wraps around to the opposite side of the screen. 
+		See instruction 8xy3 for more information on XOR, and section 2.4, Display, for more information on the Chip-8 screen and sprites.
+		*/
+		case 0xD000:
+			unsigned char Y = V[(opcode & 0x0F00) >> 8];
+			unsigned char X = V[(opcode & 0x00F0) >> 4];
+			unsigned short N = (opcode & 0x000F);
+			unsigned char currentPixel;
+			unsigned short xpos;
+			unsigned short ypos;
+
+			V[0xF] = 0;
+
+			// TODO test pong
+			for (int yline = 0; yline < N; yline++) {
+				currentPixel = memory[I + yline];
+				ypos = (Y + yline) % SCREEN_HEIGHT;
+				for (int xline = 0; xline < 8; xline++) {
+					xpos = (X + xline) % SCREEN_WIDTH;
+
+					if (gfx[xpos + (ypos * SCREEN_WIDTH)] == 1) {
+						V[0xF] = 1;
+					}
+					gfx[(xpos + (ypos * SCREEN_WIDTH))] ^= 1;
+				}
+			}
+			
+			drawFlag = true;
+			pc += 2;
+			break;
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
