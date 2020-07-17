@@ -399,6 +399,21 @@ void Chip8::emulateCycle() {
 
 					pc += 2;
 					break;
+
+				// Fills V0 to VX (including VX) with values from memory starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.
+				case 0x0065:
+					int x = (opcode & 0x0F00) >> 8;
+					
+					for (int i = 0; i <= x; i++) {
+						V[i] = memory[I + i];
+					}
+
+					pc += 2;
+					break;
+
+				default:
+					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
+					break;
 			}
 
 		default:
