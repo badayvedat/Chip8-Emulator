@@ -389,6 +389,16 @@ void Chip8::emulateCycle() {
 					pc += 2;
 					break;
 
+				// Stores V0 to VX (including VX) in memory starting at address I. The offset from I is increased by 1 for each value written, but I itself is left unmodified.
+				case 0x0055:
+					int x = (opcode & 0x0F00) >> 8;
+					
+					for (int i = 0; i <= x; i++) {
+						memory[I + i] = V[i];
+					}
+
+					pc += 2;
+					break;
 			}
 
 		default:
