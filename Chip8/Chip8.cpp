@@ -146,9 +146,9 @@ void Chip8::emulateCycle() {
 			break;
 
 		case 0x8000:
-			unsigned char VX = V[(opcode & 0x0F00) >> 8];
-			unsigned char VY = V[(opcode & 0x00F0) >> 4];
 			switch (opcode & 0x000F) {
+				unsigned char VX = V[(opcode & 0x0F00) >> 8];
+				unsigned char VY = V[(opcode & 0x00F0) >> 4];
 				// Sets VX to the value of VY
 				case 0x0000:
 					V[(opcode & 0x0F00) >> 8] = VY;
