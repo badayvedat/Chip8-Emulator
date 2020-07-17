@@ -293,6 +293,31 @@ void Chip8::emulateCycle() {
 			pc += 2;
 			break;
 
+		case 0xE000:
+			switch (opcode & 0x000F) {
+				// Skips the next instruction if the key stored in VX is pressed.
+				case 0x000E:
+					if (key[(opcode & 0x0F00) >> 8] != 0) {
+						pc += 4;
+					} else {
+						pc += 2;
+					}
+					break;
+
+				// Skips the next instruction if the key stored in VX isn't pressed.
+				case 0x0001:
+					if (key[(opcode & 0x0F00) >> 8] == 0) {
+						pc += 4;
+					} else {
+						pc += 2;
+					}
+					break;
+
+				default:
+					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
+					break;
+			}
+
 		default:
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
