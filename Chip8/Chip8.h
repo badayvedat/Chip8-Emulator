@@ -18,11 +18,6 @@ public:
 	void emulateCycle();
 
 private:
-	// static const short TOTAL_MEMORY = 4096;
-	// static const short SCREEN_WIDTH = 64;
-	// static const short SCREEN_HEIGHT = 32;
-
-
 	unsigned char memory[TOTAL_MEMORY];
 	unsigned char gfx[SCREEN_HEIGHT * SCREEN_WIDTH];
 
