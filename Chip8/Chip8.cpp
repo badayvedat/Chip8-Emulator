@@ -73,7 +73,7 @@ void Chip8::emulateCycle() {
 	// Decode opcode
 	//AND opcode with 0xF000 to get first 4 bits.
 	switch (opcode & 0xF000) {
-		case 0x0000:
+		case 0x0000: {
 			// AND opcode with 0x0FF to get last 8 bits
 			switch (opcode & 0x0FF) {
 				case 0x0000: {
@@ -99,7 +99,8 @@ void Chip8::emulateCycle() {
 					break;
 				}
 			}
-
+			break;
+		}
 		// Jumps to address NNN
 		case 0x1000: {
 			pc = (opcode & 0x0FFF);
@@ -243,6 +244,7 @@ void Chip8::emulateCycle() {
 					break;
 				}
 			}
+			break;
 		}
 
 		// Skips the next instruction if VX doesn't equal VY.
@@ -337,6 +339,7 @@ void Chip8::emulateCycle() {
 					break;
 				}
 			}
+			break;
 		}
 
 		case 0xF000: {
@@ -438,6 +441,7 @@ void Chip8::emulateCycle() {
 					break;
 				}
 			}
+			break;
 		}
 
 		default: {
