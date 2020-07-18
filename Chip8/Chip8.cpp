@@ -377,7 +377,7 @@ void Chip8::emulateCycle() {
 				While at least one game, Animal Race, depends on VF not being affected.
 				*/
 				case 0x001E: {
-					I += (opcode & 0x0F00) >> 8;
+					I += V[(opcode & 0x0F00) >> 8];
 					break;
 				}
 
