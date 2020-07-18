@@ -335,7 +335,7 @@ void Chip8::emulateCycle() {
 			switch (opcode & 0x00FF) {
 				// Sets VX to the value of the delay timer.
 				case 0x0007: {
-					delay_timer = V[(opcode & 0x0F00) >> 8];
+					V[(opcode & 0x0F00) >> 8] = delay_timer;
 					break;
 				}
 
