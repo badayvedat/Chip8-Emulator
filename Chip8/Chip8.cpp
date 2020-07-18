@@ -70,10 +70,6 @@ void Chip8::emulateCycle() {
 		case 0x0000:
 			// AND opcode with 0x0FF to get last 8 bits
 			switch (opcode & 0x0FF) {
-				// Calls machine code routine (RCA 1802 for COSMAC VIP) at address NNN. Not necessary for most ROMs.
-				case 0x0000:
-					break;
-
 				// Clears the screen
 				case 0x00E0: {
 					for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
@@ -83,6 +79,7 @@ void Chip8::emulateCycle() {
 					pc += 2;
 					break;
 				}
+
 				// Returns from a subroutine
 				case 0x00EE: {
 					--sp;
