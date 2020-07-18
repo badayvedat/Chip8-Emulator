@@ -1,6 +1,5 @@
 #include <iostream>
 #include <fstream>
-#include <algorithm>
 #include <iomanip>
 
 #include "Chip8.h"
