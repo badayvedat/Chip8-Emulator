@@ -63,6 +63,7 @@ bool Chip8::loadGame(std::string fileName) {
 void Chip8::emulateCycle() {
 	// Fetch opcode
 	opcode = memory[pc] << 8 | memory[pc + 1];
+	pc += 2;
 
 	// Decode opcode
 	//AND opcode with 0xF000 to get first 4 bits.
@@ -76,14 +77,12 @@ void Chip8::emulateCycle() {
 						gfx[i] = 0;
 					}
 					drawFlag = true;
-					pc += 2;
 					break;
 				}
 
 				// Returns from a subroutine
 				case 0x00EE: {
 					--sp;
-					pc = stack[sp];
 					break;
 				}
 
@@ -109,8 +108,6 @@ void Chip8::emulateCycle() {
 		// Skips the next instruction if VX equals NN
 		case 0x3000: {
 			if (V[(opcode & 0x0F00) >> 8] == (opcode & 0x00FF)) {
-				pc += 4;
-			} else {
 				pc += 2;
 			}
 			break;
@@ -119,8 +116,6 @@ void Chip8::emulateCycle() {
 		// Skips the next instruction if VX doesn't equal NN
 		case 0x4000: {
 			if (V[(opcode & 0x0F00) >> 8] != (opcode & 0x00FF)) {
-				pc += 4;
-			} else {
 				pc += 2;
 			}
 			break;
@@ -129,8 +124,6 @@ void Chip8::emulateCycle() {
 		// Skips the next instruction if VX equals VY
 		case 0x5000: {
 			if (V[(opcode & 0x0F00) >> 8] == V[(opcode & 0x00F0) >> 4]) {
-				pc += 4;
-			} else {
 				pc += 2;
 			}
 			break;
@@ -139,14 +132,12 @@ void Chip8::emulateCycle() {
 		// Sets VX to NN
 		case 0x6000: {
 			V[(opcode & 0x0F00) >> 8] = (opcode & 0x00FF);
-			pc += 2;
 			break;
 		}
 
 		// Adds NN to VX (Carry flag is not changed)
 		case 0x7000: {
 			V[(opcode & 0x0F00) >> 8] += (opcode & 0x00FF);
-			pc += 2;
 			break;
 		}
 
@@ -156,7 +147,6 @@ void Chip8::emulateCycle() {
 				case 0x0000: {
 					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = VY;
-					pc += 2;
 					break;
 				}
 
@@ -165,7 +155,6 @@ void Chip8::emulateCycle() {
 					unsigned char VX = V[(opcode & 0x0F00) >> 8];
 					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = (VX | VY);
-					pc += 2;
 					break;
 				}
 
@@ -174,7 +163,6 @@ void Chip8::emulateCycle() {
 					unsigned char VX = V[(opcode & 0x0F00) >> 8];
 					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = (VX & VY);
-					pc += 2;
 					break;
 				}
 
@@ -183,7 +171,6 @@ void Chip8::emulateCycle() {
 					unsigned char VX = V[(opcode & 0x0F00) >> 8];
 					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[(opcode & 0x0F00) >> 8] = (VX ^ VY);
-					pc += 2;
 					break;
 				}
 
@@ -197,7 +184,6 @@ void Chip8::emulateCycle() {
 						V[0xF] = 0;
 					}
 					V[(opcode & 0x0F00) >> 8] += VY;
-					pc += 2;
 					break;
 				}
 
@@ -211,7 +197,6 @@ void Chip8::emulateCycle() {
 						V[0xF] = 1;
 					}
 					V[(opcode & 0x0F00) >> 8] -= VY;
-					pc += 2;
 					break;
 				}
 
@@ -221,7 +206,6 @@ void Chip8::emulateCycle() {
 					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[0xF] = (VX & 0x1);
 					V[(opcode & 0x0F00) >> 8] >>= 1;
-					pc += 2;
 					break;
 				}
 
@@ -235,7 +219,6 @@ void Chip8::emulateCycle() {
 						V[0xF] = 1;
 					}
 					V[(opcode & 0x0F00) >> 8] = VY - VX;
-					pc += 2;
 					break;
 				}
 
@@ -245,7 +228,6 @@ void Chip8::emulateCycle() {
 					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[0xF] = (VX & 0x1);
 					V[(opcode & 0x0F00) >> 8] <<= 1;
-					pc += 2;
 					break;
 				}
 
@@ -258,8 +240,6 @@ void Chip8::emulateCycle() {
 		// Skips the next instruction if VX doesn't equal VY.
 		case 0x9000: {
 			if (V[(opcode & 0x0F00) >> 8] != V[(opcode & 0x00F0) >> 4]) {
-				pc += 4;
-			} else {
 				pc += 2;
 			}
 			break;
@@ -268,7 +248,6 @@ void Chip8::emulateCycle() {
 		// Sets I to the address NNNN.
 		case 0xA000: {
 			I = (opcode & 0x0FFF);
-			pc += 2;
 			break;
 		}
 
@@ -281,7 +260,6 @@ void Chip8::emulateCycle() {
 		// Sets VX to the result of a bitwise and operation on a random number.
 		case 0xC000: {
 			V[(opcode & 0x0F00) >> 8] = (rand() % 0xFF) & (opcode & 0x00FF);
-			pc += 2;
 			break;
 		}
 
@@ -323,7 +301,6 @@ void Chip8::emulateCycle() {
 			}
 
 			drawFlag = true;
-			pc += 2;
 			break;
 		}
 
@@ -332,8 +309,6 @@ void Chip8::emulateCycle() {
 				// Skips the next instruction if the key stored in VX is pressed.
 				case 0x000E: {
 					if (key[(opcode & 0x0F00) >> 8] != 0) {
-						pc += 4;
-					} else {
 						pc += 2;
 					}
 					break;
@@ -342,8 +317,6 @@ void Chip8::emulateCycle() {
 				// Skips the next instruction if the key stored in VX isn't pressed.
 				case 0x0001: {
 					if (key[(opcode & 0x0F00) >> 8] == 0) {
-						pc += 4;
-					} else {
 						pc += 2;
 					}
 					break;
@@ -360,7 +333,6 @@ void Chip8::emulateCycle() {
 				// Sets VX to the value of the delay timer.
 				case 0x0007: {
 					delay_timer = V[(opcode & 0x0F00) >> 8];
-					pc += 2;
 					break;
 				}
 
@@ -378,7 +350,6 @@ void Chip8::emulateCycle() {
 						}
 					}
 
-					pc += 2;
 					break;
 				}
 
@@ -392,7 +363,6 @@ void Chip8::emulateCycle() {
 				// Sets the sound timer to VX.
 				case 0x0018: {
 					sound_timer = V[(opcode & 0x0F00) >> 8];
-					pc += 2;
 					break;
 				}
 
@@ -405,7 +375,6 @@ void Chip8::emulateCycle() {
 				*/
 				case 0x001E: {
 					I += (opcode & 0x0F00) >> 8;
-					pc += 2;
 					break;
 				}
 
@@ -413,7 +382,6 @@ void Chip8::emulateCycle() {
 				case 0x0029: {
 					unsigned short VX = V[(opcode & 0x0F00) >> 8];
 					I = VX * 5;
-					pc += 2;
 					break;
 				}
 
@@ -429,7 +397,6 @@ void Chip8::emulateCycle() {
 					memory[I] = (VX / 100) % 10;
 					memory[I + 1] = (VX / 10) % 10;
 					memory[I + 2] = VX % 10;
-					pc += 2;
 					break;
 				}
 
@@ -441,7 +408,6 @@ void Chip8::emulateCycle() {
 						memory[I + i] = V[i];
 					}
 
-					pc += 2;
 					break;
 				}
 
@@ -453,7 +419,6 @@ void Chip8::emulateCycle() {
 						V[i] = memory[I + i];
 					}
 
-					pc += 2;
 					break;
 				}
 
