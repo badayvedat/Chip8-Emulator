@@ -360,7 +360,6 @@ void Chip8::emulateCycle() {
 				// Sets the delay timer to VX.
 				case 0x0015: {
 					delay_timer = V[(opcode & 0x0F00) >> 8];
-					pc += 2;
 					break;
 				}
 
