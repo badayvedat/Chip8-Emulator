@@ -44,7 +44,7 @@ bool Chip8::loadGame(std::string fileName) {
 
 		// Free Memory of Chip-8 starts from 0x200
 		for (int i = 0; i < bufferSize; i++) {
-			memory[i + 0x200] = buffer[i];;
+			memory[i + 0x200] = buffer[i];
 		}
 
 		delete[] buffer;
