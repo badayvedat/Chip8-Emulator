@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <algorithm>
+#include <iomanip>
 
 #include "Chip8.h"
 
@@ -63,6 +64,8 @@ bool Chip8::loadGame(std::string fileName) {
 void Chip8::emulateCycle() {
 	// Fetch opcode
 	opcode = memory[pc] << 8 | memory[pc + 1];
+	std::cout << std::setfill('0') << std::setw(4) << std::hex << opcode << std::setfill(' ') << std::setw(4) << pc << ' ' << I << '\n';
+	
 	pc += 2;
 
 	// Decode opcode
@@ -203,7 +206,6 @@ void Chip8::emulateCycle() {
 				// Stores the least significant bit of VX in VF and then shifts VX to the right by 1.
 				case 0x0006: {
 					unsigned char VX = V[(opcode & 0x0F00) >> 8];
-					unsigned char VY = V[(opcode & 0x00F0) >> 4];
 					V[0xF] = (VX & 0x1);
 					V[(opcode & 0x0F00) >> 8] >>= 1;
 					break;
@@ -225,8 +227,7 @@ void Chip8::emulateCycle() {
 				// Stores the most significant bit of VX in VF and then shifts VX to the left by 1.
 				case 0x000E: {
 					unsigned char VX = V[(opcode & 0x0F00) >> 8];
-					unsigned char VY = V[(opcode & 0x00F0) >> 4];
-					V[0xF] = (VX & 0x1);
+					V[0xF] = (VX & 0x80) >> 7;
 					V[(opcode & 0x0F00) >> 8] <<= 1;
 					break;
 				}
@@ -293,10 +294,12 @@ void Chip8::emulateCycle() {
 				for (int xline = 0; xline < 8; xline++) {
 					xpos = (X + xline) % SCREEN_WIDTH;
 
-					if (gfx[xpos + (ypos * SCREEN_WIDTH)] == 1) {
-						V[0xF] = 1;
+					if (currentPixel) {
+						if (gfx[xpos + (ypos * SCREEN_WIDTH)] == 1) {
+							V[0xF] = 1;
+						}
+						gfx[(xpos + (ypos * SCREEN_WIDTH))] ^= 1;
 					}
-					gfx[(xpos + (ypos * SCREEN_WIDTH))] ^= 1;
 				}
 			}
 
@@ -308,7 +311,7 @@ void Chip8::emulateCycle() {
 			switch (opcode & 0x000F) {
 				// Skips the next instruction if the key stored in VX is pressed.
 				case 0x000E: {
-					if (key[(opcode & 0x0F00) >> 8] != 0) {
+					if (key[V[(opcode & 0x0F00) >> 8]] != 0) {
 						pc += 2;
 					}
 					break;
@@ -316,7 +319,7 @@ void Chip8::emulateCycle() {
 
 				// Skips the next instruction if the key stored in VX isn't pressed.
 				case 0x0001: {
-					if (key[(opcode & 0x0F00) >> 8] == 0) {
+					if (key[V[(opcode & 0x0F00) >> 8]] == 0) {
 						pc += 2;
 					}
 					break;

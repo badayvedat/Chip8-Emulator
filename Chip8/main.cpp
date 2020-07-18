@@ -5,8 +5,10 @@ int main() {
 	// setupInput()
 	Chip8 chip8;
 	chip8.initialize();
-	chip8.loadGame("test_opcode.ch8");
-	chip8.emulateCycle();
+	chip8.loadGame("BC_test.ch8");
+	for (int i = 0; i < 100; i++) {
+		chip8.emulateCycle();
+	}
 	
 	/*
 		// Set up render system and register input callbacks
