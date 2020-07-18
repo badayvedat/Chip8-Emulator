@@ -22,6 +22,9 @@ void Chip8::initialize() {
 	// Clear registers
 	std::fill(V, V + 16, 0);
 
+	// Clear keys
+	std::fill(key, key + 16, 0);
+
 	// Load fontset
 	for (int i = 0; i < 80; i++) {
 		memory[i] = fontset[i];
@@ -63,7 +66,7 @@ bool Chip8::loadGame(std::string fileName) {
 void Chip8::emulateCycle() {
 	// Fetch opcode
 	opcode = memory[pc] << 8 | memory[pc + 1];
-	std::cout << std::setfill('0') << std::setw(4) << std::hex << opcode << std::setfill(' ') << std::setw(4) << pc << ' ' << I << '\n';
+	std::cout << std::setfill('0') << std::setw(4) << std::hex << opcode << ' ' << pc << ' ' << I << '\n';
 	
 	pc += 2;
 
@@ -73,11 +76,13 @@ void Chip8::emulateCycle() {
 		case 0x0000:
 			// AND opcode with 0x0FF to get last 8 bits
 			switch (opcode & 0x0FF) {
+				case 0x0000: {
+					break;
+				}
+
 				// Clears the screen
 				case 0x00E0: {
-					for (int i = 0; i < SCREEN_HEIGHT * SCREEN_WIDTH; i++) {
-						gfx[i] = 0;
-					}
+					std::fill(gfx, gfx + SCREEN_HEIGHT * SCREEN_WIDTH, 0);
 					drawFlag = true;
 					break;
 				}
@@ -85,12 +90,14 @@ void Chip8::emulateCycle() {
 				// Returns from a subroutine
 				case 0x00EE: {
 					--sp;
+					pc = stack[sp];
 					break;
 				}
 
-				default:
+				default: {
 					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 					break;
+				}
 			}
 
 		// Jumps to address NNN
@@ -231,9 +238,10 @@ void Chip8::emulateCycle() {
 					break;
 				}
 
-				default:
+				default: {
 					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 					break;
+				}
 			}
 		}
 
@@ -324,9 +332,10 @@ void Chip8::emulateCycle() {
 					break;
 				}
 
-				default:
+				default: {
 					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 					break;
+				}
 			}
 		}
 
@@ -424,14 +433,16 @@ void Chip8::emulateCycle() {
 					break;
 				}
 
-				default:
+				default: {
 					std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 					break;
+				}
 			}
 		}
 
-		default:
+		default: {
 			std::cout << "Unknown opcode: " << std::hex << opcode << '\n';
 			break;
+		}
 	}
 }
