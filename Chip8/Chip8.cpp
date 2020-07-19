@@ -470,3 +470,7 @@ unsigned char* Chip8::getGfx() {
 unsigned char* Chip8::getDelayTimer() {
 	return &delay_timer;
 }
+
+unsigned char* Chip8::getKeys() {
+	return key;
+}

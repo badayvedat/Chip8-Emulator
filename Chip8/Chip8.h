@@ -22,6 +22,8 @@ public:
 
 	unsigned char* getGfx();
 	unsigned char* getDelayTimer();
+	unsigned char* getKeys();
+
 
 private:
 	unsigned char memory[TOTAL_MEMORY];
