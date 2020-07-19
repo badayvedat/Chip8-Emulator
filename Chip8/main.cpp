@@ -7,7 +7,7 @@ int main(int argc, char* argv[]) {
 	chip8.loadGame("test_opcode.ch8");
 
 	Platform platform;
-	platform.init("TEST", 64, 32);
+	platform.init("TEST", 640, 320);
 
 	while (true) {
 		chip8.emulateCycle();
