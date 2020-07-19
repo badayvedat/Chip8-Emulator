@@ -10,9 +10,10 @@ int main(int argc, char* argv[]) {
 	chip8.initialize();
 	chip8.loadGame("IBM Logo.ch8");
 
-	/*
+	std::string fileName = "snake.ch8";
+
 	if (!chip8.loadGame(fileName)) {
-		std::cerr << "Could not load file " << filename << '\n';
+		std::cerr << "Could not load file " << fileName << '\n';
 		return -1;
 	}
 
@@ -20,11 +21,10 @@ int main(int argc, char* argv[]) {
 		std::cerr << "An error occured while initalizing Platform" << '\n';
 		return -1;
 	}
-	*/
 
-	platform.init("TEST", 640, 320);
+	bool quit = false;
 
-	while (true) {
+	while (!quit) {
 		chip8.emulateCycle();
 		
 		if (chip8.getDrawFlag()) {
@@ -32,7 +32,9 @@ int main(int argc, char* argv[]) {
 			chip8.setDrawFlag(false);
 		}
 		
-		// setupInput()
+		if (!platform.handleInput(chip8.getKeys(), *chip8.getDelayTimer())) {
+			quit = true;
+		}
 
 	}
 	return 0;
