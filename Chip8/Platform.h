@@ -8,7 +8,7 @@ public:
 
 	bool init(const char* title, int width, int height);
 	void drawGraphics(unsigned char* display, const int width, const int height);
-	bool handleInput(unsigned char* key, unsigned char& delay_timer);
+	bool handleInput(unsigned char* key);
 
 private:
 	SDL_Window* window;

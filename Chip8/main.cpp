@@ -32,7 +32,7 @@ int main(int argc, char* argv[]) {
 			chip8.setDrawFlag(false);
 		}
 		
-		if (!platform.handleInput(chip8.getKeys(), *chip8.getDelayTimer())) {
+		if (!platform.handleInput(chip8.getKeys())) {
 			quit = true;
 		}
 

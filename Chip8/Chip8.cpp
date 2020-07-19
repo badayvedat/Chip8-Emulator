@@ -73,6 +73,10 @@ void Chip8::emulateCycle() {
 	
 	pc += 2;
 
+	if (delay_timer > 0) {
+		--delay_timer;
+	}
+
 	// Decode opcode
 	//AND opcode with 0xF000 to get first 4 bits.
 	switch (opcode & 0xF000) {
@@ -465,10 +469,6 @@ void Chip8::setDrawFlag(bool flag) {
 
 unsigned char* Chip8::getGfx() {
 	return gfx;
-}
-
-unsigned char* Chip8::getDelayTimer() {
-	return &delay_timer;
 }
 
 unsigned char* Chip8::getKeys() {

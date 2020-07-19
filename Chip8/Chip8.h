@@ -21,7 +21,6 @@ public:
 	void setDrawFlag(bool flag);
 
 	unsigned char* getGfx();
-	unsigned char* getDelayTimer();
 	unsigned char* getKeys();
 
 

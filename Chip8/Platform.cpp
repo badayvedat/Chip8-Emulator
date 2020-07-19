@@ -48,7 +48,7 @@ void Platform::drawGraphics(unsigned char* display, const int width, const int h
 		SDL_RenderPresent(renderer);
 }
 
-bool Platform::handleInput(unsigned char* key, unsigned char& delay_timer) {
+bool Platform::handleInput(unsigned char* key) {
 	while (SDL_PollEvent(&event)) {
 		if (event.type == SDL_QUIT) {
 			return false;
@@ -195,9 +195,6 @@ bool Platform::handleInput(unsigned char* key, unsigned char& delay_timer) {
 			break;
 		}
 	}
-
-	if (delay_timer > 0)
-		--delay_timer;
 
 	return true;
 }
