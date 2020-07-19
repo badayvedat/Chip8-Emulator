@@ -290,8 +290,8 @@ void Chip8::emulateCycle() {
 		If the sprite is positioned so part of it is outside the coordinates of the display, it wraps around to the opposite side of the screen.
 		*/
 		case 0xD000: {
-			unsigned char Y = V[(opcode & 0x0F00) >> 8];
-			unsigned char X = V[(opcode & 0x00F0) >> 4];
+			unsigned char X = V[(opcode & 0x0F00) >> 8];
+			unsigned char Y = V[(opcode & 0x00F0) >> 4];
 			unsigned short N = (opcode & 0x000F);
 			unsigned char currentPixel;
 			unsigned short xpos;
