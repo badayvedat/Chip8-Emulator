@@ -466,3 +466,7 @@ void Chip8::setDrawFlag(bool flag) {
 unsigned char* Chip8::getGfx() {
 	return gfx;
 }
+
+unsigned char* Chip8::getDelayTimer() {
+	return &delay_timer;
+}

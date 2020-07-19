@@ -21,6 +21,7 @@ public:
 	void setDrawFlag(bool flag);
 
 	unsigned char* getGfx();
+	unsigned char* getDelayTimer();
 
 private:
 	unsigned char memory[TOTAL_MEMORY];
