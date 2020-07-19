@@ -458,6 +458,10 @@ bool Chip8::getDrawFlag() {
 	return drawFlag;
 }
 
+void Chip8::setDrawFlag(bool flag) {
+	drawFlag = flag;
+}
+
 unsigned char* Chip8::getGfx() {
 	return gfx;
 }

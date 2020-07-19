@@ -18,6 +18,8 @@ public:
 	void emulateCycle();
 
 	bool getDrawFlag();
+	void setDrawFlag(bool flag);
+
 	unsigned char* getGfx();
 
 private:
