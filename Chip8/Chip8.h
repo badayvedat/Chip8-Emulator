@@ -17,6 +17,9 @@ public:
 	bool loadGame(std::string fileName);
 	void emulateCycle();
 
+	bool getDrawFlag();
+	unsigned char* getGfx();
+
 private:
 	unsigned char memory[TOTAL_MEMORY];
 	unsigned char gfx[SCREEN_HEIGHT * SCREEN_WIDTH];

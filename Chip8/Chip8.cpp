@@ -450,3 +450,11 @@ void Chip8::emulateCycle() {
 		}
 	}
 }
+
+bool Chip8::getDrawFlag() {
+	return drawFlag;
+}
+
+unsigned char* Chip8::getGfx() {
+	return gfx;
+}
