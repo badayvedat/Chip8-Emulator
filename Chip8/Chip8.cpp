@@ -4,7 +4,7 @@
 
 #include "Chip8.h"
 
-void Chip8::initialize() {
+Chip8::Chip8() {
 	pc = 0x200;		// Program counter starts at 0x200
 	I = 0;			// Reset current opcode
 	sp = 0;			// Reset index register
@@ -37,6 +37,9 @@ void Chip8::initialize() {
 	// Set draw flag
 	drawFlag = 0;
 }
+Chip8::~Chip8() {
+}
+;
 
 bool Chip8::loadGame(std::string fileName) {
 	std::ifstream ifs(fileName, std::ios::binary);

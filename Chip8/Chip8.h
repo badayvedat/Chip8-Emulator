@@ -10,10 +10,9 @@
 class Chip8
 {
 public:
-	//Chip8();
-	//~Chip8();
+	Chip8();
+	~Chip8();
 
-	void initialize();
 	bool loadGame(std::string fileName);
 	void emulateCycle();
 
@@ -22,7 +21,6 @@ public:
 
 	unsigned char* getGfx();
 	unsigned char* getKeys();
-
 
 private:
 	unsigned char memory[TOTAL_MEMORY];

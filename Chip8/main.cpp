@@ -7,7 +7,6 @@ int main(int argc, char* argv[]) {
 	Chip8 chip8;
 	Platform platform;
 	
-	chip8.initialize();
 	chip8.loadGame("IBM Logo.ch8");
 
 	std::string fileName = "snake.ch8";
