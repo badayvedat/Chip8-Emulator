@@ -33,6 +33,9 @@ void Chip8::initialize() {
 	// Reset timers
 	delay_timer = 0;
 	sound_timer = 0;
+
+	// Set draw flag
+	drawFlag = 0;
 }
 
 bool Chip8::loadGame(std::string fileName) {
