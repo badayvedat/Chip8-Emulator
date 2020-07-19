@@ -33,7 +33,7 @@ void Platform::drawGraphics(unsigned char* display, const int width, const int h
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
-		SDL_SetRenderDrawColor(renderer, 0, 0, 255, 0);
+		SDL_SetRenderDrawColor(renderer, 238, 169, 144, 0);
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
