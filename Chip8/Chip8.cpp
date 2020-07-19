@@ -293,17 +293,17 @@ void Chip8::emulateCycle() {
 			unsigned char X = V[(opcode & 0x0F00) >> 8];
 			unsigned char Y = V[(opcode & 0x00F0) >> 4];
 			unsigned short N = (opcode & 0x000F);
-			unsigned char currentPixel;
+			unsigned char currentByte, currentPixel;
 			unsigned short xpos;
 			unsigned short ypos;
 
 			V[0xF] = 0;
 
-			// TODO test pong
 			for (int yline = 0; yline < N; yline++) {
-				currentPixel = memory[I + yline];
+				currentByte = memory[I + yline];
 				ypos = (Y + yline) % SCREEN_HEIGHT;
 				for (int xline = 0; xline < 8; xline++) {
+					currentPixel = (currentByte & (0x80 >> xline)) >> (8 - xline - 1);
 					xpos = (X + xline) % SCREEN_WIDTH;
 
 					if (currentPixel) {
