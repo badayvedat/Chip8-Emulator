@@ -14,6 +14,7 @@ int main(int argc, char* argv[]) {
 		
 		if (chip8.getDrawFlag()) {
 			platform.drawGraphics(chip8.getGfx(), 64, 32);
+			chip8.setDrawFlag(false);
 		}
 		
 		// setupInput()
