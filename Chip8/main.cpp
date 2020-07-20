@@ -7,9 +7,7 @@ int main(int argc, char* argv[]) {
 	Chip8 chip8;
 	Platform platform;
 	
-	chip8.loadGame("IBM Logo.ch8");
-
-	std::string fileName = "snake.ch8";
+	std::string fileName = "IBM Logo.ch8";
 
 	if (!chip8.loadGame(fileName)) {
 		std::cerr << "Could not load file " << fileName << '\n';
@@ -18,6 +16,11 @@ int main(int argc, char* argv[]) {
 
 	if (!platform.init("CHIP-8 EMULATOR", 640, 320)) {
 		std::cerr << "An error occured while initalizing Platform" << '\n';
+		return -1;
+	}
+
+	if (!platform.setAudio("sfx1.wav")) {
+		std::cerr << "Could not set Audio File!" << '\n';
 		return -1;
 	}
 
@@ -34,6 +37,8 @@ int main(int argc, char* argv[]) {
 		if (!platform.handleInput(chip8.getKeys())) {
 			quit = true;
 		}
+
+		platform.handleAudio(chip8.getSoundTimer());
 
 	}
 	return 0;

@@ -4,11 +4,17 @@
 Platform::Platform() {
 	window = nullptr;
 	renderer = nullptr;
+
+	beepSound = nullptr;
 }
 
 Platform::~Platform() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
+
+	Mix_FreeChunk(beepSound);
+	Mix_Quit();
+
 	SDL_Quit();
 }
 
@@ -21,7 +27,30 @@ bool Platform::init(const char* title, int width, int height) {
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	SDL_RenderSetLogicalSize(renderer, 64, 32);
 	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	
 	return true;
+}
+
+bool Platform::setAudio(const char* fileName) {
+	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0) {
+		std::cerr << "SDL_mixer could not be initalized" << '\n';
+		return false;
+	}
+
+	beepSound = Mix_LoadWAV(fileName);
+	if (beepSound == nullptr) {
+		std::cerr << "Failed to load sound file!" << '\n';
+	}
+
+	beepSound->volume = 4;
+
+	return true;
+}
+
+void Platform::handleAudio(unsigned short soundTimer) {
+	if (soundTimer > 0) {
+		Mix_PlayChannel(-1, beepSound, 0);
+	}
 }
 
 void Platform::drawGraphics(unsigned char* display, const int width, const int height) {

@@ -80,6 +80,10 @@ void Chip8::emulateCycle() {
 		--delay_timer;
 	}
 
+	if (sound_timer > 0) {
+		--sound_timer;
+	}
+
 	// Decode opcode
 	//AND opcode with 0xF000 to get first 4 bits.
 	switch (opcode & 0xF000) {
@@ -476,4 +480,8 @@ unsigned char* Chip8::getGfx() {
 
 unsigned char* Chip8::getKeys() {
 	return key;
+}
+
+unsigned char Chip8::getSoundTimer() {
+	return sound_timer;
 }
