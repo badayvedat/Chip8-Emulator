@@ -50,6 +50,9 @@ int main(int argc, char* argv[]) {
 				quit = true;
 			}
 			
+			// Audio will be handled in every cycle
+			platform.handleAudio(chip8.getSoundTimer());
+
 			cycleScheduler.setTime(currTime.getTime());
 		}
 
@@ -57,7 +60,6 @@ int main(int argc, char* argv[]) {
 			if (chip8.getSoundTimer() > 0) {
 				chip8.decreaseSoundTimer();
 			}
-			platform.handleAudio(chip8.getSoundTimer());
 
 			if (chip8.getDelayTimer() > 0) {
 				chip8.decreaseDelayTimer();
