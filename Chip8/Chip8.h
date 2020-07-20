@@ -19,9 +19,14 @@ public:
 	bool getDrawFlag();
 	void setDrawFlag(bool flag);
 
+	unsigned char getSoundTimer();
+	void decreaseSoundTimer();
+
+	unsigned char getDelayTimer();
+	void decreaseDelayTimer();
+
 	unsigned char* getGfx();
 	unsigned char* getKeys();
-	unsigned char getSoundTimer();
 
 private:
 	unsigned char memory[TOTAL_MEMORY];

@@ -72,17 +72,8 @@ bool Chip8::loadGame(std::string fileName) {
 void Chip8::emulateCycle() {
 	// Fetch opcode
 	opcode = memory[pc] << 8 | memory[pc + 1];
-	// std::cout << std::setfill('0') << std::setw(4) << std::hex << opcode << ' ' << pc << ' ' << I << '\n';
 	
 	pc += 2;
-
-	if (delay_timer > 0) {
-		--delay_timer;
-	}
-
-	if (sound_timer > 0) {
-		--sound_timer;
-	}
 
 	// Decode opcode
 	//AND opcode with 0xF000 to get first 4 bits.
@@ -484,4 +475,16 @@ unsigned char* Chip8::getKeys() {
 
 unsigned char Chip8::getSoundTimer() {
 	return sound_timer;
+}
+
+void Chip8::decreaseSoundTimer() {
+	--sound_timer;
+}
+
+unsigned char Chip8::getDelayTimer() {
+	return delay_timer;
+}
+
+void Chip8::decreaseDelayTimer() {
+	--delay_timer;
 }
