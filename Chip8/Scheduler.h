@@ -12,7 +12,8 @@ public:
 	void setTime(std::chrono::steady_clock::time_point timeValue);
 
 	double duration(std::chrono::steady_clock::time_point time);
-
+	
+	// Returns true if duration between two scheduler (or time) is greater than this scheduler's delay.
 	bool run(std::chrono::steady_clock::time_point time);
 	bool run(Scheduler scheduler);
 
