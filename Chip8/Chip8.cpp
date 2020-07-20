@@ -72,7 +72,7 @@ bool Chip8::loadGame(std::string fileName) {
 void Chip8::emulateCycle() {
 	// Fetch opcode
 	opcode = memory[pc] << 8 | memory[pc + 1];
-	std::cout << std::setfill('0') << std::setw(4) << std::hex << opcode << ' ' << pc << ' ' << I << '\n';
+	// std::cout << std::setfill('0') << std::setw(4) << std::hex << opcode << ' ' << pc << ' ' << I << '\n';
 	
 	pc += 2;
 
