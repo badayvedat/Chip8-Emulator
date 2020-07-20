@@ -40,6 +40,7 @@ bool Platform::setAudio(const char* fileName) {
 	beepSound = Mix_LoadWAV(fileName);
 	if (beepSound == nullptr) {
 		std::cerr << "Failed to load sound file!" << '\n';
+		return false;
 	}
 
 	beepSound->volume = 4;
