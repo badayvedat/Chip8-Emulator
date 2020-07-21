@@ -1,32 +1,41 @@
 #include "Chip8.h"
 #include "Platform.h"
 #include "Scheduler.h"
+#include "ConfigManager.h"
 
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-
+	/*
 	if (argc != 4) {
 		std::cerr << "Usage: " << argv[0] << " <RomPath> <CycleRefreshRate> <Scale>\n"
 			<< "For Most Roms 500 would be nice cycle refresh rate, i prefer 1000.\n"
 			<< "Chip8's original width is 64 and height is 32. Based on your Scale value it will be width * scale and height * scale.\n";
 		return -1;
 	}
+	*/
+
 	Chip8 chip8;
 	Platform platform;
 
+	ConfigManager configManager;
+	if (!configManager.loadConfigFile()) {
+		std::cerr << "Error occured while parsing config file" << '\n';
+		return -1;
+	}
+	/*
 	std::string fileName = argv[1];
 	int cycleRefreshRate = std::stoi(argv[2]);
 	int scale = std::stoi(argv[3]);
+	*/
 
-
-	if (!chip8.loadGame(fileName)) {
-		std::cerr << "Could not load file " << fileName << '\n';
+	if (!chip8.loadGame(configManager.getRomName())) {
+		std::cerr << "Could not load file " << configManager.getRomName() << '\n';
 		return -1;
 	}
 
 	// Original height of CHIP8 is equal to 32 and width is equal to 64.
-	if (!platform.init("CHIP-8 EMULATOR", 64 * scale, 32 * scale)) {
+	if (!platform.init("CHIP-8 EMULATOR", 64 * configManager.getScale(), 32 * configManager.getScale())) {
 		std::cerr << "An error occured while initalizing Platform" << '\n';
 		return -1;
 	}
@@ -40,7 +49,7 @@ int main(int argc, char* argv[]) {
 	For most of Chip-8 games 500Hz is a good delay;
 	But i choose to play with 1000Hz, feels smoother.
 	*/
-	Scheduler cycleScheduler(1000);
+	Scheduler cycleScheduler(configManager.getCycleRefreshRate());
 	
 	// Sound and delay timer for chip8 decreases at 60hz no matter what cycle refresh rate is.
 	Scheduler delayScheduler(60);
