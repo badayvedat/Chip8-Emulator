@@ -152,12 +152,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Chip8.cpp" />
+    <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Scheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Chip8.h" />
+    <ClInclude Include="ConfigManager.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Scheduler.h" />
   </ItemGroup>
