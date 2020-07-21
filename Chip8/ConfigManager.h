@@ -17,8 +17,6 @@ public:
 	int getScale();
 
 private:
-	int scale;
-
 	// Cycle refresh rate is in Hertz. 
 	int CycleRefreshRate;
 
