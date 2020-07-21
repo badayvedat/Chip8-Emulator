@@ -25,7 +25,8 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	if (!platform.init("CHIP-8 EMULATOR", 64 * scale, 48 * scale)) {
+	// Original height of CHIP8 is equal to 32 and width is equal to 64.
+	if (!platform.init("CHIP-8 EMULATOR", 64 * scale, 32 * scale)) {
 		std::cerr << "An error occured while initalizing Platform" << '\n';
 		return -1;
 	}
