@@ -14,6 +14,8 @@ public:
 	int getGreen();
 	int getBlue();
 
+	int getScale();
+
 private:
 	int scale;
 
@@ -26,5 +28,8 @@ private:
 	int rgbRed;
 	int rgbGreen;
 	int rgbBlue;
+
+	// Scale value which will be used to Multiply Height and Width.
+	int scale;
 };
 

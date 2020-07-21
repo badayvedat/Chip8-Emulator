@@ -18,6 +18,7 @@ bool ConfigManager::loadConfigFile() {
     bool red = false;
     bool green = false;
     bool blue = false;
+    bool scale = false;
 
     std::string line;
 
@@ -58,10 +59,14 @@ bool ConfigManager::loadConfigFile() {
                     lineStream >> rgbBlue;
                     blue = true;
             }
+            else if (tempString == "SCALE") {
+                lineStream >> scale;
+                scale = true;
+            }
         }
     }
 
-    if (rom && cycleRate && rgbRed && rgbGreen && rgbRed) {
+    if (rom && cycleRate && rgbRed && rgbGreen && rgbRed && scale) {
         return 1;
     }
 
@@ -86,4 +91,8 @@ int ConfigManager::getGreen() {
 
 int ConfigManager::getBlue() {
     return rgbBlue;
+}
+
+int ConfigManager::getScale() {
+    return scale;
 }
