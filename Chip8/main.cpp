@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 	Chip8 chip8;
 	Platform platform;
 	
-	std::string fileName = "../GameRoms/Space Invaders [David Winter].ch8";
+	std::string fileName = "../Roms/Space Invaders [David Winter].ch8";
 
 	if (!chip8.loadGame(fileName)) {
 		std::cerr << "Could not load file " << fileName << '\n';
@@ -20,12 +20,15 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-	if (!platform.setAudio("sfx1.wav")) {
+	if (!platform.setAudio("../SFX/sfx1.wav")) {
 		std::cerr << "Could not set Audio File!" << '\n';
 		return -1;
 	}
 
-	// For most of Chip-8 games 500Hz is a good delay;
+	/*
+	For most of Chip-8 games 500Hz is a good delay;
+	But i choose to play with 1000Hz, feels smoother.
+	*/
 	Scheduler cycleScheduler(1000);
 	
 	// Sound and delay timer for chip8 decreases at 60hz no matter what cycle refresh rate is.
