@@ -8,7 +8,7 @@ int main(int argc, char* argv[]) {
 	Chip8 chip8;
 	Platform platform;
 	
-	std::string fileName = "snake.ch8";
+	std::string fileName = "../GameRoms/Space Invaders [David Winter].ch8";
 
 	if (!chip8.loadGame(fileName)) {
 		std::cerr << "Could not load file " << fileName << '\n';
@@ -26,7 +26,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	// For most of Chip-8 games 500Hz is a good delay;
-	Scheduler cycleScheduler(500);
+	Scheduler cycleScheduler(1000);
 	
 	// Sound and delay timer for chip8 decreases at 60hz no matter what cycle refresh rate is.
 	Scheduler delayScheduler(60);
