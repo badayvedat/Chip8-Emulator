@@ -6,15 +6,6 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) {
-	/*
-	if (argc != 4) {
-		std::cerr << "Usage: " << argv[0] << " <RomPath> <CycleRefreshRate> <Scale>\n"
-			<< "For Most Roms 500 would be nice cycle refresh rate, i prefer 1000.\n"
-			<< "Chip8's original width is 64 and height is 32. Based on your Scale value it will be width * scale and height * scale.\n";
-		return -1;
-	}
-	*/
-
 	Chip8 chip8;
 	Platform platform;
 
@@ -23,11 +14,6 @@ int main(int argc, char* argv[]) {
 		std::cerr << "Error occured while parsing config file" << '\n';
 		return -1;
 	}
-	/*
-	std::string fileName = argv[1];
-	int cycleRefreshRate = std::stoi(argv[2]);
-	int scale = std::stoi(argv[3]);
-	*/
 
 	if (!chip8.loadGame(configManager.getRomName())) {
 		std::cerr << "Could not load file " << configManager.getRomName() << '\n';
