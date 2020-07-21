@@ -6,6 +6,10 @@ Platform::Platform() {
 	renderer = nullptr;
 
 	beepSound = nullptr;
+
+	RedValue = 238;
+	GreenValue = 169;
+	BlueValue = 144;
 }
 
 Platform::~Platform() {
@@ -26,7 +30,7 @@ bool Platform::init(const char* title, int width, int height) {
 	window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
 	renderer = SDL_CreateRenderer(window, -1, 0);
 	SDL_RenderSetLogicalSize(renderer, 64, 32);
-	SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
+	SDL_SetRenderDrawColor(renderer, RedValue, GreenValue, BlueValue, 255);
 	
 	return true;
 }
@@ -54,6 +58,12 @@ void Platform::handleAudio(unsigned short soundTimer) {
 	}
 }
 
+void Platform::setColors(int Red, int Green, int Blue) {
+	RedValue = Red;
+	GreenValue = Green;
+	BlueValue = Blue;
+}
+
 void Platform::drawGraphics(unsigned char* display, const int width, const int height) {
 		SDL_Rect rect;
 		rect.x = 0;
@@ -63,7 +73,7 @@ void Platform::drawGraphics(unsigned char* display, const int width, const int h
 
 		SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
 		SDL_RenderClear(renderer);
-		SDL_SetRenderDrawColor(renderer, 238, 169, 144, 0);
+		SDL_SetRenderDrawColor(renderer, RedValue, GreenValue, BlueValue, 0);
 
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {

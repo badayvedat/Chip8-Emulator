@@ -45,6 +45,9 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
+	// Set colors
+	platform.setColors(configManager.getRed(), configManager.getGreen(), configManager.getBlue());
+
 	/*
 	For most of Chip-8 games 500Hz is a good delay;
 	But i choose to play with 1000Hz, feels smoother.
