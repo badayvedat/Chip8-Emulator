@@ -29,18 +29,43 @@ bool ConfigManager::loadConfigFile() {
     */
     std::string tempString, tempOperator;
 
-    while (ifs) {
-        std::getline(ifs, line);
+    while (std::getline(ifs, line)) {
         std::stringstream lineStream{ line };
-        
-        while (lineStream) {
-            lineStream >> tempString >> tempOperator;
+
+        if (lineStream >> tempString >> tempOperator) {
             
-            if (tempString == "#") break;
-            if (tempOperator != "=") break;
+            // # character means it's comment line.
+            if (tempString == "#") {
+                continue;
+            }
+            if (tempOperator != "=") {
+                continue;
+            }
 
             else if (tempString == "ROM") {
-                lineStream >> romName;
+                std::string token;
+                std::getline(lineStream, token);
+
+                auto startIndex = token.find('"');
+
+                // Rom name must start with " character.
+                if (startIndex == std::string::npos) {
+                    continue;
+                }
+
+                auto lastIndex = token.find('"', startIndex + 1);
+
+                // There must be another " characther which identifies end of the rom's name.
+                if (lastIndex == std::string::npos) {
+                    continue;
+                }
+
+                // There should not be another " character in line.
+                if (token.find('"', lastIndex + 1) != std::string::npos) {
+                    continue;
+                }
+
+                romName = token.substr(startIndex + 1, lastIndex - 2);
                 isRom = true;
             }
             else if (tempString == "REFRESHRATE") {
