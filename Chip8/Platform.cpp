@@ -7,6 +7,7 @@ Platform::Platform() {
 
 	beepSound = nullptr;
 
+	// Default values for an aesthetic color.
 	RedValue = 238;
 	GreenValue = 169;
 	BlueValue = 144;
