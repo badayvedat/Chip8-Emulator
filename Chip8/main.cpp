@@ -16,8 +16,8 @@ int main(int argc, char* argv[]) {
 	Platform platform;
 
 	std::string fileName = argv[1];
-	int scale = std::stoi(argv[2]);
-	int cycleRefreshRate = std::stoi(argv[3]);
+	int cycleRefreshRate = std::stoi(argv[2]);
+	int scale = std::stoi(argv[3]);
 
 
 	if (!chip8.loadGame(fileName)) {
