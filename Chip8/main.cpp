@@ -5,22 +5,32 @@
 #include <iostream>
 
 int main(int argc, char* argv[]) {
+
+	if (argc != 4) {
+		std::cerr << "Usage: " << argv[0] << " <RomPath> <CycleRefreshRate> <Scale>\n"
+			<< "For Most Roms 500 would be nice cycle refresh rate, i prefer 1000.\n"
+			<< "Chip8's original width is 64 and height is 32. Based on your Scale value it will be width * scale and height * scale.\n";
+		return -1;
+	}
 	Chip8 chip8;
 	Platform platform;
-	
-	std::string fileName = "../Roms/Space Invaders [David Winter].ch8";
+
+	std::string fileName = argv[1];
+	int scale = std::stoi(argv[2]);
+	int cycleRefreshRate = std::stoi(argv[3]);
+
 
 	if (!chip8.loadGame(fileName)) {
 		std::cerr << "Could not load file " << fileName << '\n';
 		return -1;
 	}
 
-	if (!platform.init("CHIP-8 EMULATOR", 960, 480)) {
+	if (!platform.init("CHIP-8 EMULATOR", 64 * scale, 48 * scale)) {
 		std::cerr << "An error occured while initalizing Platform" << '\n';
 		return -1;
 	}
 
-	if (!platform.setAudio("../SFX/sfx1.wav")) {
+	if (!platform.setAudio("SFX/sfx1.wav")) {
 		std::cerr << "Could not set Audio File!" << '\n';
 		return -1;
 	}
