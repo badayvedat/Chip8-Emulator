@@ -9,7 +9,7 @@ bool ConfigManager::loadConfigFile() {
     
     if (!ifs) {
         std::cerr << "Config file not found!" << '\n';
-        return -1;
+        return false;
     }
 
     // If all of them found in config file return true;
@@ -67,10 +67,10 @@ bool ConfigManager::loadConfigFile() {
     }
 
     if (rom && cycleRate && rgbRed && rgbGreen && rgbRed && scale) {
-        return 1;
+        return true;
     }
 
-    return -1;
+    return false;
 }
 
 int ConfigManager::getCycleRefreshRate() {
