@@ -13,12 +13,12 @@ bool ConfigManager::loadConfigFile() {
     }
 
     // If all of them found in config file return true;
-    bool rom = false;
-    bool cycleRate = false;
-    bool red = false;
-    bool green = false;
-    bool blue = false;
-    bool scale = false;
+    bool isRom = false;
+    bool isCycleRate = false;
+    bool isRed = false;
+    bool isGreen = false;
+    bool isBlue = false;
+    bool isScale = false;
 
     std::string line;
 
@@ -41,32 +41,32 @@ bool ConfigManager::loadConfigFile() {
 
             else if (tempString == "ROM") {
                 lineStream >> romName;
-                rom = true;
+                isRom = true;
             }
             else if (tempString == "REFRESHRATE") {
                 lineStream >> CycleRefreshRate;
-                cycleRate = true;
+                isCycleRate = true;
             }
             else if (tempString == "RED") {
                  lineStream >> rgbRed;
-                 red = true;
+                 isRed = true;
             }
             else if (tempString == "GREEN") {
                     lineStream >> rgbGreen;
-                    green = true;
+                    isGreen = true;
             }
             else if (tempString == "BLUE") {
                     lineStream >> rgbBlue;
-                    blue = true;
+                    isBlue = true;
             }
             else if (tempString == "SCALE") {
                 lineStream >> scale;
-                scale = true;
+                isScale = true;
             }
         }
     }
 
-    if (rom && cycleRate && rgbRed && rgbGreen && rgbRed && scale) {
+    if (isRom && isCycleRate && isRed && isGreen && isRed && isScale) {
         return true;
     }
 
