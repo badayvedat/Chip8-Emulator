@@ -28,3 +28,11 @@ For those who do not want to build I included precompiled binary files in /build
 ## Usage 
 Before running emulator be sure to check config.ini file.
 After that you can just run it by clicking executable file.
+
+
+## Possible Improvements
+    Adding SuperChip-8 functions.
+   
+    Implementing function pointer table.
+   
+    Replacing unsigned short and unsigned char variables with fixed width integer types.
