@@ -7,13 +7,14 @@ This is a hobby project I started to dive into world of emulation and learn abou
 In the world of emulation a CHIP-8 Emulator is equivelant of "Hello, World" in the world of programming.
 
 ## Dependencies
-SDL2 - For graphics
+SDL2
 
 If you don't know to how to install SDL2 for your system check:
 https://wiki.libsdl.org/Installation
 
 
-SDL2_Mixer For sound
+SDL2_Mixer
+
 If you don't know to how to install SDL2_Mixer for your system check:
 https://www.libsdl.org/projects/SDL_mixer/docs/SDL_mixer_frame.html
 
