@@ -32,8 +32,8 @@ After that you can just run it by clicking executable file.
 
 
 ## Possible Improvements
-    Adding SuperChip-8 functions.
-   
-    Implementing function pointer table.
-   
-    Replacing unsigned short and unsigned char variables with fixed width integer types.
+Adding SuperChip-8 functions.
+
+Implementing function pointer table.
+
+Replacing unsigned short and unsigned char variables with fixed width integer types.
