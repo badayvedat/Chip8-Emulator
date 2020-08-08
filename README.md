@@ -32,8 +32,12 @@ After that you can just run it by clicking executable file.
 
 
 ## Possible Improvements
-Adding SuperChip-8 functions.
+Add SuperChip-8 functions.
 
-Implementing function pointer table.
+Implement function pointer table.
 
-Replacing unsigned short and unsigned char variables with fixed width integer types.
+Replace unsigned short and unsigned char variables with fixed width integer types.
+
+Add make or cmake support
+
+Add linux support
