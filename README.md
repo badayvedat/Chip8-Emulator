@@ -32,6 +32,8 @@ After that you can just run it by clicking executable file.
 
 
 ## Possible Improvements
+Move source files and header files to proper folders.
+
 Add SuperChip-8 functions.
 
 Implement function pointer table.
